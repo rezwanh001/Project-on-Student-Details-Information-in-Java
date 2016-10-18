@@ -1,0 +1,225 @@
+import java.io.*;
+import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.util.Scanner;
+
+public class Student {
+	static Scanner sc = new Scanner(System.in);
+	private InputStream stream;
+
+	public Student(InputStream stream) {
+		this.stream = stream;
+	}
+
+	public static InputStream inputStream;
+	public static OutputStream outputStream;
+	static {
+		try {
+			inputStream = new FileInputStream("input.txt");
+			outputStream = new FileOutputStream("output.txt");
+		} catch (Exception ex) {
+
+		}
+	}
+	public static Student in = new Student(inputStream);
+	public static PrintWriter out = new PrintWriter(outputStream);
+
+	// static Scanner sc = new Scanner(new File("input.txt"));
+	// static PrintStream out = new PrintStream("output.txt");
+	
+	static int Term_Num;
+	static int Subject_Num;
+
+	public static Student[] Ar = new Student[10];
+
+	int Id;
+	String Name;
+	String Department;
+	String University;
+
+	// double[] GPAs;
+	// String [] Subjects;
+	// double [][] Credits;
+	// double [][] Grades;
+
+	double[] GPAs = new double[50];
+	String[][] Subjects = new String[50][50];
+	double[][] Credits = new double[50][50];
+	double[][] Grades = new double[50][50];
+
+	public Student(int m_id, String m_Nm, String m_Dpt, String m_var) {
+		Id = m_id;
+		Name = m_Nm;
+		Department = m_Dpt;
+		University = m_var;
+
+		// double[] GPAs = new double[50];
+		// String [] Subjects = new String[50];
+		// double [][] Credits = new double[50][50];
+		// double [][] Grades = new double[50][50];
+	}
+
+	public void computeGPAById(int d) {
+		double total_Credits = 0.0;
+		double total_Crd_Grd = 0.0;
+		double gpa = 0.0;
+		int cnt = 0;
+
+		double cr, gd;
+		// Enter Credits for Each Subject
+		// pr("Enter nuber of Terms And Subjects : ");
+
+		Term_Num = sc.nextInt();
+		Subject_Num = sc.nextInt();
+
+		for (int i = 0; i < Term_Num; i++) {
+			// String sub = sc.nextLine();
+
+			for (int j = 0; j < Subject_Num; j++) {
+				// pr("Enter Sub, Credits and Gardes : ");
+				// pr("Enter Sub : ");
+				String sub = sc.next();
+				cr = sc.nextDouble();
+				gd = sc.nextDouble();
+
+				Subjects[i][j] = sub;
+				Credits[i][j] = cr;
+				Grades[i][j] = gd;
+			}
+		}
+
+		for (int trm = 0; trm < Term_Num; trm++) {
+			for (int i = 0; i < Subject_Num; i++) {
+				total_Crd_Grd += Credits[trm][i] * Grades[trm][i];
+				total_Credits += Credits[trm][i];
+			}
+
+			gpa = total_Crd_Grd / total_Credits;
+			GPAs[trm] = gpa;
+		}
+	}
+
+	public double computeCGPAByID(int id) {
+		double cg = 0.0;
+		double CGPA = 0.0;
+		for (int i = 0; i < Term_Num; i++) {
+			cg += GPAs[i];
+		}
+		CGPA = cg / Term_Num;
+		return CGPA;
+	}
+
+	public void updateStudentById(int id) {
+		// prln("Do you want to update Informations ? (1/0) : ");
+
+		// String s = sc.next();
+		int s = sc.nextInt();
+
+		if (s == 1) {
+			// prln("Enter update Student's Id , Name , Department, Varsity : ");
+			int u_id = sc.nextInt();
+			String u_nm = sc.next();
+			String u_dpt = sc.next();
+			String u_var = sc.next();
+
+			Ar[id] = new Student(u_id, u_nm, u_dpt, u_var);
+			Ar[id].computeGPAById(id);
+			Ar[id].computeCGPAByID(id);
+		} else {
+			prln("You type No.. Thank You .. ");
+		}
+	}
+
+	public void Display(int d) {
+		prln("Id         : " + Id);
+		prln("Name       : " + Name);
+		prln("University : " + University);
+		prln("Department : " + Department);
+		prln("GPAs       : ");
+
+		int year = 1;
+		for (int i = 0, trm = 1; i < Term_Num; i++, trm++) {
+
+			if (trm % 2 == 1) {
+				prln("GPA in " + (year) + " year  1 st Semister : " + GPAs[i]);
+				year++;
+			} else {
+				prln("GPA in " + (year) + " year  2 st Semister : " + GPAs[i]);
+			}
+
+		}
+		prln("\n");
+
+		prln("Subjects are : ");
+		int cnt = 1;
+		for (int i = 0; i < Term_Num; i++) {
+			for (int j = 0; j < Subject_Num; j++) {
+				pr((cnt) + " th Subject " + Subjects[i][j] + " \n");
+				cnt++;
+			}
+			prln("");
+		}
+
+		prln("CGPA : " + computeCGPAByID(1));
+		prln("-------------------------------");
+	}
+
+	/**
+	 * 
+	 * @throws FileNotFoundException
+	 * @Main Function
+	 */
+
+	public static void main(String[] args) throws FileNotFoundException {
+		// System.setIn(new FileInputStream(new File("input.txt")));
+		// System.setOut(new PrintStream(new File("output.txt")));
+
+		// Scanner in = new Scanner(new File("input.txt"));
+		// PrintStream out = new PrintStream("output.txt");
+		// static Scanner sc = new Scanner(new File("input.txt"));
+
+		// prln("Enter Number of Student : ");
+		int n = sc.nextInt();
+
+		// Student [] Ar = new Student[10];
+
+		// Student st = new Student(1407028, "Rezwan", "CSE", "KUET");
+		for (int i = 0; i < n; i++) {
+			// prln("Enter Id, Name , Department, Varsity of : " + (i+1)
+			// " + th Student. ");
+
+			int id = sc.nextInt();
+			// String Faul = sc.nextLine();
+
+			String nm = sc.next();
+			String dpt = sc.next();
+			String var = sc.next();
+
+			Ar[i] = new Student(id, nm, dpt, var);
+			Ar[i].computeGPAById(i);
+			// Ar[i].Display(i);
+			Ar[i].updateStudentById(i);
+			// Ar[i].Display(i);
+		}
+
+		prln("############################################");
+
+		for (int i = 0; i < n; i++) {
+			Ar[i].Display(i);
+		}
+
+	}
+
+	static void prln(Object anyObject) {
+		System.out.println(anyObject);
+	}
+
+	static void pr(Object anyObject) {
+		System.out.print(anyObject);
+	}
+}

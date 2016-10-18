@@ -1,0 +1,34 @@
+---------------Thank You----------------
+********** Final Information ***********
+Id         : 1907028
+Name       : Zemi
+University : KUET
+Department : CSE
+GPAs       : 
+GPA in 1 year  1 th Semister : 3.9
+GPA in 1 year  2 th Semister : 3.9274999999999998
+
+CGPA : 3.91375
+
+Subjects are : 
+1 th Subject Bio. 
+2 th Subject Phy. 
+3 th Subject Math. 
+4 th Subject Chem. 
+-----------------------------------------------------
+Id         : 140107
+Name       : Riaj
+University : KUET
+Department : EEE
+GPAs       : 
+GPA in 1 year  1 th Semister : 3.715239616613418
+GPA in 1 year  2 th Semister : 3.5707504078303427
+
+CGPA : 3.6429950122218804
+
+Subjects are : 
+1 th Subject Alg. 
+2 th Subject EEE. 
+3 th Subject Phy. 
+4 th Subject Math. 
+-----------------------------------------------------
